@@ -34,6 +34,7 @@ where
     ///     merger.collect::<Vec<_>>()
     /// );
     /// ```
+    #[inline]
     pub fn new(mut left: L, mut right: R) -> Self {
         Self {
             l_next: left.next(),
@@ -64,6 +65,7 @@ where
     ///     merger.collect::<Vec<_>>()
     /// );
     /// ```
+    #[inline]
     pub fn with_custom_ordering<F>(mut left: L, mut right: R, cmp: F) -> Self
     where
         F: 'static + Fn(&T, &T) -> bool,

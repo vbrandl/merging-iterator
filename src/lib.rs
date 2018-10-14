@@ -18,6 +18,18 @@ pub struct MergeIter<L, R, T> {
     cmp_function: Box<dyn Fn(&T, &T) -> bool>,
 }
 
+impl<L, R, T> From<(L, R)> for MergeIter<L, R, T>
+where
+    L: Iterator<Item = T>,
+    R: Iterator<Item = T>,
+    T: Ord,
+{
+    #[inline]
+    fn from((left, right): (L, R)) -> Self {
+        Self::new(left, right)
+    }
+}
+
 impl<L, R, T> MergeIter<L, R, T>
 where
     L: Iterator<Item = T>,

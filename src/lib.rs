@@ -126,9 +126,8 @@ where
             l + r,
             match (lo, ro) {
                 (Some(lo), Some(ro)) => Some(lo + ro),
-                (Some(lo), None) => Some(lo),
-                (None, Some(ro)) => Some(ro),
-                (None, None) => None,
+                // no predictable upper bound
+                _ => None,
             },
         )
     }

@@ -11,12 +11,14 @@ pub struct MergeIter<L, R, T> {
     right: R,
     l_next: Option<T>,
     r_next: Option<T>,
+    cmp_function: Box<dyn Fn(&T, &T) -> bool>,
 }
 
 impl<L, R, T> MergeIter<L, R, T>
 where
     L: Iterator<Item = T>,
     R: Iterator<Item = T>,
+    T: Ord,
 {
     /// Creates a new `MergeIter` that returns elements from both supplied iterators in order,
     /// given they are sorted.
@@ -38,6 +40,40 @@ where
             r_next: right.next(),
             left,
             right,
+            cmp_function: Box::new(|a, b| a < b),
+        }
+    }
+}
+
+impl<L, R, T> MergeIter<L, R, T>
+where
+    L: Iterator<Item = T>,
+    R: Iterator<Item = T>,
+{
+    /// Creates a new `MergeIter` that uses a custom ordering function.
+    ///
+    /// # Examples
+    /// ```
+    /// use merging_iterator::MergeIter;
+    /// let a = vec![8, 6, 4, 2, 0].into_iter();
+    /// let b = vec![9, 7, 5, 3, 1].into_iter();
+    /// let cmp = |a: &u8, b: &u8| b < a;
+    /// let merger = MergeIter::with_custom_ordering(a, b, cmp);
+    /// assert_eq!(
+    ///     vec![9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
+    ///     merger.collect::<Vec<_>>()
+    /// );
+    /// ```
+    pub fn with_custom_ordering<F>(mut left: L, mut right: R, cmp: F) -> Self
+    where
+        F: 'static + Fn(&T, &T) -> bool,
+    {
+        Self {
+            l_next: left.next(),
+            r_next: right.next(),
+            left,
+            right,
+            cmp_function: Box::new(cmp),
         }
     }
 }
@@ -53,7 +89,7 @@ where
     fn next(&mut self) -> Option<Self::Item> {
         match (self.l_next.take(), self.r_next.take()) {
             (Some(l), Some(r)) => {
-                if l < r {
+                if (self.cmp_function)(&l, &r) {
                     self.l_next = self.left.next();
                     self.r_next = Some(r);
                     Some(l)

@@ -42,8 +42,8 @@ where
     /// # Examples
     /// ```
     /// use merging_iterator::MergeIter;
-    /// let a = vec![0, 2, 4, 6, 8].into_iter();
-    /// let b = vec![1, 3, 5, 7, 9].into_iter();
+    /// let a = vec![0, 2, 4, 6, 8];
+    /// let b = vec![1, 3, 5, 7, 9];
     /// let merger = MergeIter::new(a, b);
     /// assert_eq!(
     ///     vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -51,7 +51,13 @@ where
     /// );
     /// ```
     #[inline]
-    pub fn new(mut left: L, mut right: R) -> Self {
+    pub fn new<IL, IR>(left: IL, right: IR) -> Self
+    where
+        IL: IntoIterator<IntoIter = L, Item = T>,
+        IR: IntoIterator<IntoIter = R, Item = T>,
+    {
+        let mut left = left.into_iter();
+        let mut right = right.into_iter();
         Self {
             l_next: left.next(),
             r_next: right.next(),
@@ -72,8 +78,8 @@ where
     /// # Examples
     /// ```
     /// use merging_iterator::MergeIter;
-    /// let a = vec![8, 6, 4, 2, 0].into_iter();
-    /// let b = vec![9, 7, 5, 3, 1].into_iter();
+    /// let a = vec![8, 6, 4, 2, 0];
+    /// let b = vec![9, 7, 5, 3, 1];
     /// let cmp = |a: &u8, b: &u8| b < a;
     /// let merger = MergeIter::with_custom_ordering(a, b, cmp);
     /// assert_eq!(
@@ -82,10 +88,14 @@ where
     /// );
     /// ```
     #[inline]
-    pub fn with_custom_ordering<F>(mut left: L, mut right: R, cmp: F) -> Self
+    pub fn with_custom_ordering<IL, IR, F>(left: IL, right: IR, cmp: F) -> Self
     where
+        IL: IntoIterator<IntoIter = L, Item = T>,
+        IR: IntoIterator<IntoIter = R, Item = T>,
         F: 'static + Fn(&T, &T) -> bool,
     {
+        let mut left = left.into_iter();
+        let mut right = right.into_iter();
         Self {
             l_next: left.next(),
             r_next: right.next(),
@@ -154,7 +164,7 @@ mod tests {
         fn test_is_sorted_property(mut a: Vec<i32>, mut b: Vec<i32>) {
             a.sort_unstable();
             b.sort_unstable();
-            let merger = MergeIter::new(a.into_iter(), b.into_iter());
+            let merger = MergeIter::new(a, b);
             assert!(is_sorted(merger));
         }
 
@@ -168,8 +178,8 @@ mod tests {
             b.sort_unstable();
             c.sort_unstable();
             let merger = MergeIter::new(
-                MergeIter::new(a.into_iter(), b.into_iter()),
-                c.into_iter()
+                MergeIter::new(a, b),
+                c
             );
             assert!(is_sorted(merger));
         }
@@ -181,27 +191,27 @@ mod tests {
 
         let a = vec![1, 3, 5, 7, 9];
         let b = vec![2, 4, 6, 8];
-        let merger = MergeIter::new(a.into_iter(), b.into_iter());
+        let merger = MergeIter::new(a, b);
         assert_eq!(expected, merger.collect::<Vec<_>>());
 
         let a = vec![1, 2, 3, 4, 5];
         let b = vec![6, 7, 8, 9];
-        let merger = MergeIter::new(a.into_iter(), b.into_iter());
+        let merger = MergeIter::new(a, b);
         assert_eq!(expected, merger.collect::<Vec<_>>());
 
         let a = vec![3, 5, 6, 8];
         let b = vec![1, 2, 4, 7, 9];
-        let merger = MergeIter::new(a.into_iter(), b.into_iter());
+        let merger = MergeIter::new(a, b);
         assert_eq!(expected, merger.collect::<Vec<_>>());
 
         let a = vec![];
         let b = vec![1, 2, 3, 4, 5, 6, 7, 8, 9];
-        let merger = MergeIter::new(a.into_iter(), b.into_iter());
+        let merger = MergeIter::new(a, b);
         assert_eq!(expected, merger.collect::<Vec<_>>());
 
         let a = vec![1, 2, 3, 4, 5, 6, 7, 8, 9];
         let b = vec![];
-        let merger = MergeIter::new(a.into_iter(), b.into_iter());
+        let merger = MergeIter::new(a, b);
         assert_eq!(expected, merger.collect::<Vec<_>>());
     }
 
@@ -212,8 +222,8 @@ mod tests {
         let a = vec![1, 4, 7];
         let b = vec![2, 5, 8];
         let c = vec![3, 6, 9];
-        let merger = MergeIter::new(a.into_iter(), b.into_iter());
-        let merger = MergeIter::new(c.into_iter(), merger);
+        let merger = MergeIter::new(a, b);
+        let merger = MergeIter::new(c, merger);
         let merger = merger.collect::<Vec<_>>();
         assert_eq!(expected, merger);
         assert!(is_sorted(merger.iter()));

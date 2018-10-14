@@ -1,6 +1,10 @@
 #![deny(unused, missing_docs)]
 //! `MergeIter` is an iterator that returns the elements of two iterators in order, given both
 //! iterators are sorted.
+//!
+//! **Important note**: This iterator only works as intended, if both input iterators are sorted.
+//! There are no checks in place to validate this property.
+
 #[cfg(test)]
 #[macro_use]
 extern crate proptest;

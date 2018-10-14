@@ -24,3 +24,6 @@ deploy:
 
 after_deploy:
   - cargo publish --token "$CRATES_IO_TOKEN"
+
+notifications:
+  on_success: never

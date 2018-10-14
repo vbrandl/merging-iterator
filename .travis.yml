@@ -1,0 +1,26 @@
+language: rust
+sudo: false
+cache: cargo
+
+env:
+  global:
+    - secure: "DvfRT7x8FDPzwdnOUpbnHZgnhWL9NSwMusUXDLFcD43JcK4IwuDpX+iqE4n77T3rw8UtOK5606C7FE09r/TDz1mlXlOwMepaG3kZTOpPNpXiWRqybgwRhMOIv6WL4alsntLek1ktZ4KcEpUpb+L9TpEZOUzUREqF0B4EFgVRp/SBklqwLV8OfEAERTqeIniHt76fJdj6R3NBgdh8NmRGTXcUdLZIdbqYiMyTsgQ1g9K9JB7IiUGJPy/0JwpCU4A++XUvqh3yUU37RFHltril7iuznSnqh9K9uiaEUaxORvCJcWnsv07fNfgqJLGloO/hWA2i3d2CSNkHNNKhrVhEog485TQMcmK5xEDdoJlvvc1nYBid5FcgcYuMnlriX7vmF98O17Jj2KXOT3euExztfcuojOYr8GsBzGckFl6Pr/oMvXHnNKZR7GUcDfEDgj1tEPbY2LRMKzXJdlAMg07ZMxR94vv4Hl8hF3vvxQVjY3UaSCB6YhazwMl8btP1zNuLjJBkz5VQ24RWDaqxybCsUwMUw8MCXS2Nrvr9K4msh3w8uZHLdlmql27ZQ3MPHFnDbf47DUEr5nucl/gKB/2wUZ3uSsMZJP+Q0rNSmAs5gMM/8hOtReHhBDf7/dSx63RIEdPKJSxdC2XDV7+SYr9vslvCUUv2A9fjTo0E3kwzfIo="
+
+script:
+  - cargo test
+
+before_deploy:
+  - cargo doc
+  - cargo package
+
+deploy:
+  provider: releases
+  api-key:
+    secure: "YOio8AXzeLoIHLYROjvBd0Uughb2tmSrg9UpuIFJeQYYrq1PAzio7/ei6IjUpK/Z7lMZ9pTrWk1/Z9D27mZm/rpo+n4DB4QagYP2R8iTA0D6krGBUneGrQPmJIWhqWrDg2fteh+28HAetLizqKpYaYcKZxntn2lxKSFgFgDnGRi7DLDCETLi5/U4HpPa0ANGCssWW40o4hLoXxysGZywuZ37JdOIpaaYfbQ9mczJFwMnchTg46OdUZxZKF2NSCOGeg+wKG6k2+/r/Majkjouc0HLgNqdEBkuwn6z6r9HF3S1bqG1z+950pJt8+nZiEK+p9MdoGBav/cgMRmt6IJJYsVlkA6jOaebAvpvbZutNQ2tJob4br4psDHFkwj6vxcOGXTUBBsZZwoErOsO6wnRVwnE6icLRFIWdrGzyYAVcMfaG1ayQo+8laRhf7KsRdzMBm7cjMiAG65rJtnciZwAU6k2lxG9SynImmfTIrHPg0UGtC53zpIK+9sDEq842vqaRKsAJlzgHlYcK5dSqQIF4pGD7Vf7IhQ7hyucRtDDAuOcJjBagRWNuAyPuTFNON0vuibjutgqO6vbm4nm50GjnAU+VHqWTAjBTvyS7+wMynk/itct+6/WKUbCgO11+TyFBTIJidAm37ppW5eaqMZsA2Tlbgpq8v1yafL20qbbRHE="
+  file: target/package/merging-iterator-$TRAVIS_TAG.crate
+  skip_cleanup: true
+  on:
+    tags: true
+
+after_deploy:
+  - cargo publish --token "$CRATES_IO_TOKEN"

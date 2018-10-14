@@ -19,8 +19,8 @@ elements of each iterator are compared. There are no checks in place to validate
 extern crate merging_iterator;
 
 use merging_iterator::MergeIter;
-let a = vec![0, 2, 4, 6, 8].into_iter();
-let b = vec![1, 3, 5, 7, 9].into_iter();
+let a = vec![0, 2, 4, 6, 8];
+let b = vec![1, 3, 5, 7, 9];
 let merger = MergeIter::new(a, b);
 assert_eq!(
     vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -34,9 +34,9 @@ You can also merge more than two sorted iterators like this:
 extern crate merging_iterator;
 
 use merging_iterator::MergeIter;
-let a = vec![1, 4, 7].into_iter();
-let b = vec![2, 5, 8].into_iter();
-let c = vec![3, 6, 9].into_iter();
+let a = vec![1, 4, 7];
+let b = vec![2, 5, 8];
+let c = vec![3, 6, 9];
 let merger = MergeIter::new(
     MergeIter::new(a, b),
     c

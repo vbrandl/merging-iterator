@@ -9,12 +9,16 @@
 #[macro_use]
 extern crate proptest;
 
+use std::iter::Peekable;
+
 /// A sorted iterator over two independent sorted iterators.
-pub struct MergeIter<L, R, T> {
-    left: L,
-    right: R,
-    l_next: Option<T>,
-    r_next: Option<T>,
+pub struct MergeIter<L, R, T>
+where
+    L: Iterator<Item = T>,
+    R: Iterator<Item = T>,
+{
+    left: Peekable<L>,
+    right: Peekable<R>,
     cmp_function: Box<dyn Fn(&T, &T) -> bool>,
 }
 
@@ -56,13 +60,9 @@ where
         IL: IntoIterator<IntoIter = L, Item = T>,
         IR: IntoIterator<IntoIter = R, Item = T>,
     {
-        let mut left = left.into_iter();
-        let mut right = right.into_iter();
         Self {
-            l_next: left.next(),
-            r_next: right.next(),
-            left,
-            right,
+            left: left.into_iter().peekable(),
+            right: right.into_iter().peekable(),
             cmp_function: Box::new(|a, b| a < b),
         }
     }
@@ -94,13 +94,9 @@ where
         IR: IntoIterator<IntoIter = R, Item = T>,
         F: 'static + Fn(&T, &T) -> bool,
     {
-        let mut left = left.into_iter();
-        let mut right = right.into_iter();
         Self {
-            l_next: left.next(),
-            r_next: right.next(),
-            left,
-            right,
+            left: left.into_iter().peekable(),
+            right: right.into_iter().peekable(),
             cmp_function: Box::new(cmp),
         }
     }
@@ -115,29 +111,28 @@ where
     type Item = T;
 
     fn next(&mut self) -> Option<Self::Item> {
-        match (self.l_next.take(), self.r_next.take()) {
-            (Some(l), Some(r)) => {
-                if (self.cmp_function)(&l, &r) {
-                    self.l_next = self.left.next();
-                    self.r_next = Some(r);
-                    Some(l)
+        // Temporary enum to prevent issues with the borrow checker
+        enum Next {
+            Left,
+            Right,
+            None,
+        }
+        let n = match (self.left.peek(), self.right.peek()) {
+            (Some(ref l), Some(ref r)) => {
+                if (self.cmp_function)(l, r) {
+                    Next::Left
                 } else {
-                    self.l_next = Some(l);
-                    self.r_next = self.right.next();
-                    Some(r)
+                    Next::Right
                 }
             }
-            (Some(l), None) => {
-                self.l_next = self.left.next();
-                self.r_next = None;
-                Some(l)
-            }
-            (None, Some(r)) => {
-                self.r_next = None;
-                self.r_next = self.right.next();
-                Some(r)
-            }
-            (None, None) => None,
+            (Some(_), None) => Next::Left,
+            (None, Some(_)) => Next::Right,
+            (None, None) => Next::None,
+        };
+        match n {
+            Next::Left => self.left.next(),
+            Next::Right => self.right.next(),
+            Next::None => None,
         }
     }
 
@@ -236,6 +231,7 @@ mod tests {
     {
         iter.fold((true, None), |(res, last), next| {
             (res && last.map(|v| v < next).unwrap_or(true), Some(next))
-        }).0
+        })
+        .0
     }
 }

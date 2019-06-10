@@ -18,4 +18,4 @@ travis-ci = { repository = "vbrandl/merging-iterator" }
 [dependencies]
 
 [dev-dependencies]
-proptest = "0.8.7"
+proptest = "0.9.4"

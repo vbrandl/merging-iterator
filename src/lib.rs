@@ -19,7 +19,7 @@ where
 {
     left: Peekable<L>,
     right: Peekable<R>,
-    cmp_function: Box<dyn Fn(&T, &T) -> bool>,
+    cmp_function: fn(&T, &T) -> bool,
 }
 
 impl<L, R, T> From<(L, R)> for MergeIter<L, R, T>
@@ -63,7 +63,7 @@ where
         Self {
             left: left.into_iter().peekable(),
             right: right.into_iter().peekable(),
-            cmp_function: Box::new(|a, b| a < b),
+            cmp_function: |a, b| a < b,
         }
     }
 }
@@ -88,16 +88,15 @@ where
     /// );
     /// ```
     #[inline]
-    pub fn with_custom_ordering<IL, IR, F>(left: IL, right: IR, cmp: F) -> Self
+    pub fn with_custom_ordering<IL, IR>(left: IL, right: IR, cmp: fn(&T, &T) -> bool) -> Self
     where
         IL: IntoIterator<IntoIter = L, Item = T>,
         IR: IntoIterator<IntoIter = R, Item = T>,
-        F: 'static + Fn(&T, &T) -> bool,
     {
         Self {
             left: left.into_iter().peekable(),
             right: right.into_iter().peekable(),
-            cmp_function: Box::new(cmp),
+            cmp_function: cmp,
         }
     }
 }

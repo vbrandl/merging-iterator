@@ -105,7 +105,6 @@ impl<L, R, T> Iterator for MergeIter<L, R, T>
 where
     L: Iterator<Item = T>,
     R: Iterator<Item = T>,
-    T: Ord,
 {
     type Item = T;
 
@@ -221,6 +220,16 @@ mod tests {
         let merger = merger.collect::<Vec<_>>();
         assert_eq!(expected, merger);
         assert!(is_sorted(merger.iter()));
+    }
+
+    #[test]
+    fn test_merge_unord() {
+        struct UnOrd;
+
+        let a = vec![UnOrd];
+        let b = vec![UnOrd];
+        let merger = MergeIter::with_custom_ordering(a, b, |_, _| true);
+        let _ = merger.collect::<Vec<_>>();
     }
 
     fn is_sorted<I, T>(iter: I) -> bool

@@ -1,7 +1,6 @@
 # Merging Iterator
 
-[![Travis Build
-Status](https://travis-ci.org/vbrandl/merging-iterator.svg?branch=master)](https://travis-ci.org/vbrandl/merging-iterator)
+![Rust](https://github.com/vbrandl/merging-iterator/workflows/Rust/badge.svg)
 [![Crates.io](https://img.shields.io/crates/v/merging-iterator.svg)](https://crates.io/crates/merging-iterator)
 [![docs.rs](https://docs.rs/merging-iterator/badge.svg)](https://docs.rs/merging-iterator/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/vbrandl/merging-iterator/blob/master/LICENSE-MIT)

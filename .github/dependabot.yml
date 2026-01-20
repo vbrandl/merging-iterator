@@ -21,3 +21,14 @@ updates:
     labels:
       - dependabot
       - dependencies
+
+  - package-ecosystem: "rust-toolchain"
+    directory: "/"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+    assignees:
+      - vbrandl
+    labels:
+      - dependabot
+      - dependencies

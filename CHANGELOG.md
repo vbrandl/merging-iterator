@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
-- Update dependencies, cargo edition, CI pipelines, dev environment ([#6](https://github.com/vbrandl/merging-iterator/pull/6))
+- Update dependencies, cargo edition, CI pipelines, dev environment, nix flake, audit, semver compatibility check ([#6](https://github.com/vbrandl/merging-iterator/pull/6))
 
 ## [1.3.0] 2020-11-18
 

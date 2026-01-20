@@ -1,0 +1,27 @@
+name: "Dependabot Changelog"
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+      - labeled
+      - unlabeled
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.CHANGELOG_TOKEN }}
+          ref: ${{ github.head_ref }}
+      - uses: dangoslen/dependabot-changelog-helper@v4
+        with:
+          activationLabel: "dependabot"
+      - uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: "Update Changelog"

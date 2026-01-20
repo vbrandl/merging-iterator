@@ -71,3 +71,13 @@ jobs:
 
       - name: Run Tests
         run: cargo test
+
+  semver-compat:
+    name: Check semver compatibilty
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v6
+
+      - name: Check semver
+        uses: obi1kenobi/cargo-semver-checks-action@v2

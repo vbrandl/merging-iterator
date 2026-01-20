@@ -116,7 +116,7 @@ where
             None,
         }
         let n = match (self.left.peek(), self.right.peek()) {
-            (Some(ref l), Some(ref r)) => {
+            (Some(l), Some(r)) => {
                 if (self.cmp_function)(l, r) {
                     Next::Left
                 } else {
@@ -238,7 +238,7 @@ mod tests {
         T: Ord,
     {
         iter.fold((true, None), |(res, last), next| {
-            (res && last.map(|v| v < next).unwrap_or(true), Some(next))
+            (res && last.is_none_or(|v| v < next), Some(next))
         })
         .0
     }

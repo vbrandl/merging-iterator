@@ -6,19 +6,29 @@ on:
       - v*
 
 jobs:
+  tests:
+    uses: vbrandl/merging-iterator/.github/workflows/rust.yml@master
+
   publish:
     name: Publish
+    needs: [tests]
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
 
       - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo registry, index and build directory
+        uses: actions/cache@v5
         with:
-          profile: minimal
-          toolchain: stable
-          override: true
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            ./target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.toml') }}
 
       - name: Login to crates.io
         run: cargo login ${CRATES_IO_TOKEN}
@@ -26,5 +36,15 @@ jobs:
           CRATES_IO_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}
 
       - name: Publish to crates.io
-        run:
-          cargo publish
+        run: cargo publish
+
+  release:
+    name: Release
+    needs: [tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: taiki-e/create-gh-release-action@v1
+        with:
+          changelog: CHANGELOG.md
+          token: ${{ secrets.GITHUB_TOKEN }}

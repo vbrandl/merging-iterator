@@ -25,7 +25,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             ~/.cargo/bin
-          key: audit-${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: cargo-audit-${{ runner.os }}
 
       - uses: rustsec/audit-check@v2
         with:

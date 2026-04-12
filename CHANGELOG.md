@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bump `proptest` from 1.9.0 to 1.11.0 ([#14](https://github.com/vbrandl/merging-iterator/pull/14), [#18](https://github.com/vbrandl/merging-iterator/pull/18))
 - Bump `rust-overlay` from `a1ab5e8` to `573a61f` ([#23](https://github.com/vbrandl/merging-iterator/pull/23))
 - Bump `flake-parts` from `5792860` to `3107b77` ([#24](https://github.com/vbrandl/merging-iterator/pull/24))
+- Bump `nixpkgs` from `dd9b079` to `4c1018d` ([#25](https://github.com/vbrandl/merging-iterator/pull/25))
 
 ## [1.3.0] 2020-11-18
 

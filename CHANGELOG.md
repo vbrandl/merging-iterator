@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bump `rust-toolchain` from 1.92.0 to 1.94.1 ([#9](https://github.com/vbrandl/merging-iterator/pull/9), [#15](https://github.com/vbrandl/merging-iterator/pull/15), [#17](https://github.com/vbrandl/merging-iterator/pull/17), [#19](https://github.com/vbrandl/merging-iterator/pull/19))
 - Bump `actions/checkout` from 5 to 6 ([#7](https://github.com/vbrandl/merging-iterator/pull/7))
 - Bump `proptest` from 1.9.0 to 1.11.0 ([#14](https://github.com/vbrandl/merging-iterator/pull/14), [#18](https://github.com/vbrandl/merging-iterator/pull/18))
-- Bump `rust-overlay` from `a1ab5e8` to `573a61f` ([#23](https://github.com/vbrandl/merging-iterator/pull/23))
+- Bump `rust-overlay` from `a1ab5e8` to `7535689` ([#23](https://github.com/vbrandl/merging-iterator/pull/23), [#27](https://github.com/vbrandl/merging-iterator/pull/27))
 - Bump `flake-parts` from `5792860` to `3107b77` ([#24](https://github.com/vbrandl/merging-iterator/pull/24))
 - Bump `nixpkgs` from `dd9b079` to `4c1018d` ([#25](https://github.com/vbrandl/merging-iterator/pull/25))
 

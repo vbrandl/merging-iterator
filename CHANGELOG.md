@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Dependencies
 - Bump `actions/checkout` from 5 to 6 ([#7](https://github.com/vbrandl/merging-iterator/pull/7))
-- Bump `rust-toolchain` from 1.92.0 to 1.94.1 ([#9](https://github.com/vbrandl/merging-iterator/pull/9), [#15](https://github.com/vbrandl/merging-iterator/pull/15), [#17](https://github.com/vbrandl/merging-iterator/pull/17), [#19](https://github.com/vbrandl/merging-iterator/pull/19))
+- Bump `rust-toolchain` from 1.92.0 to 1.95.0 ([#9](https://github.com/vbrandl/merging-iterator/pull/9), [#15](https://github.com/vbrandl/merging-iterator/pull/15), [#17](https://github.com/vbrandl/merging-iterator/pull/17), [#19](https://github.com/vbrandl/merging-iterator/pull/19), [#28](https://github.com/vbrandl/merging-iterator/pull/28))
 - Bump `actions/checkout` from 5 to 6 ([#7](https://github.com/vbrandl/merging-iterator/pull/7))
 - Bump `proptest` from 1.9.0 to 1.11.0 ([#14](https://github.com/vbrandl/merging-iterator/pull/14), [#18](https://github.com/vbrandl/merging-iterator/pull/18))
 - Bump `rust-overlay` from `a1ab5e8` to `573a61f` ([#23](https://github.com/vbrandl/merging-iterator/pull/23))

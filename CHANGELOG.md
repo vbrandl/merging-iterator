@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bump `proptest` from 1.9.0 to 1.11.0 ([#14](https://github.com/vbrandl/merging-iterator/pull/14), [#18](https://github.com/vbrandl/merging-iterator/pull/18))
 - Bump `rust-overlay` from `a1ab5e8` to `366ea19` ([#23](https://github.com/vbrandl/merging-iterator/pull/23), [#27](https://github.com/vbrandl/merging-iterator/pull/27), [#30](https://github.com/vbrandl/merging-iterator/pull/30), [#31](https://github.com/vbrandl/merging-iterator/pull/31), [#34](https://github.com/vbrandl/merging-iterator/pull/34))
 - Bump `flake-parts` from `5792860` to `0678d89` ([#24](https://github.com/vbrandl/merging-iterator/pull/24), [#35](https://github.com/vbrandl/merging-iterator/pull/35))
-- Bump `nixpkgs` from `dd9b079` to `549bd84` ([#25](https://github.com/vbrandl/merging-iterator/pull/25), [#29](https://github.com/vbrandl/merging-iterator/pull/29), [#32](https://github.com/vbrandl/merging-iterator/pull/32), [#33](https://github.com/vbrandl/merging-iterator/pull/33))
+- Bump `nixpkgs` from `dd9b079` to `da5ad66` ([#25](https://github.com/vbrandl/merging-iterator/pull/25), [#29](https://github.com/vbrandl/merging-iterator/pull/29), [#32](https://github.com/vbrandl/merging-iterator/pull/32), [#33](https://github.com/vbrandl/merging-iterator/pull/33), [#36](https://github.com/vbrandl/merging-iterator/pull/36))
 
 ## [1.3.0] 2020-11-18
 

@@ -47,6 +47,3 @@ updates:
       flake-inputs:
         patterns:
           - "*"
-        update-types:
-          - minor
-          - patch

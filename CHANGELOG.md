@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update dependencies, cargo edition, CI pipelines, dev environment, nix flake, audit, semver compatibility check ([#6](https://github.com/vbrandl/merging-iterator/pull/6))
 
 ### Dependencies
-- Bump `actions/checkout` from 5 to 6 ([#7](https://github.com/vbrandl/merging-iterator/pull/7))
+- Bump `actions/checkout` from 5 to 7 ([#7](https://github.com/vbrandl/merging-iterator/pull/7), [#53](https://github.com/vbrandl/merging-iterator/pull/53))
 - Bump `rust-toolchain` from 1.92.0 to 1.96.0 ([#9](https://github.com/vbrandl/merging-iterator/pull/9), [#15](https://github.com/vbrandl/merging-iterator/pull/15), [#17](https://github.com/vbrandl/merging-iterator/pull/17), [#19](https://github.com/vbrandl/merging-iterator/pull/19), [#28](https://github.com/vbrandl/merging-iterator/pull/28), [#45](https://github.com/vbrandl/merging-iterator/pull/45))
 - Bump `actions/checkout` from 5 to 6 ([#7](https://github.com/vbrandl/merging-iterator/pull/7))
 - Bump `proptest` from 1.9.0 to 1.11.0 ([#14](https://github.com/vbrandl/merging-iterator/pull/14), [#18](https://github.com/vbrandl/merging-iterator/pull/18))
